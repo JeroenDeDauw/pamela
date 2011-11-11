@@ -6,7 +6,9 @@ from docGen import DocGen
 app = Flask(__name__)
 
 modules = {
-    'addidentity': { 'package': 'apiAddIdentity', 'class': 'ApiAddIdentity' }
+    'addidentity': { 'package': 'apiAddIdentity', 'class': 'ApiAddIdentity' },
+    'editidentity': { 'package': 'apiEditIdentity', 'class': 'ApiEditIdentity' },
+    'deleteidentity': { 'package': 'apiDeleteIdentity', 'class': 'ApiDeleteIdentity' }
 }
 
 version = ( 0, 0, 1 )
@@ -14,15 +16,16 @@ version = ( 0, 0, 1 )
 @app.route('/')
 @app.route('/api')
 def index():
-    print 'Pamela API version %s.%s.%s' % version
-    print '---------------------'
+    html = 'Pamela API version %s.%s.%s' % version
+    html += '<hr />'
+    
     docGen = DocGen( modules )
-    return docGen.getDocs()
+    html += docGen.getDocs()
+    
+    return html
 
 @app.route('/api/<moduleName>')
 def apiRequest(moduleName):
-
-    
     if moduleName in modules:
         module = modules[moduleName]
         mod = __import__( module['package'], fromlist=[module['class']] )
@@ -35,3 +38,4 @@ def apiRequest(moduleName):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

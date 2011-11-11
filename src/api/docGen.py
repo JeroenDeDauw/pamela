@@ -16,7 +16,12 @@ class DocGen(object):
         self.modules = modules
         
     def getDocs(self):
-        return 'Available modules:<br />' + '<br />'.join( [self.getModuleDocs( module, data ) for module, data in self.modules.items()] )
+        html = '<b>Available modules:</b><br />'
+        
+        html += '\n'.join( ['<li>' + self.getModuleDocs( module, data ) + '</li>' for module, data in self.modules.items()] )
+        html = '<ul>' + html + '</ul>'
+        
+        return html
     
     def getModuleDocs(self, module, data):
         return module

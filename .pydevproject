@@ -8,6 +8,7 @@
 <path>/pamela/src</path>
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
+<path>/usr/local/lib/python2.7/dist-packages/SQLAlchemy-0.7.3-py2.7.egg</path>
 <path>/usr/local/lib/python2.7/dist-packages/Werkzeug-0.8.1-py2.7.egg</path>
 </pydev_pathproperty>
 </pydev_project>

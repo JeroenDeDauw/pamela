@@ -1,7 +1,7 @@
 from apiBase import ApiBase
 from param import Param
-
-from __init__ import Entity, session
+from entity import Entity
+from db import *
 
 '''
 Created on Nov 11, 2011

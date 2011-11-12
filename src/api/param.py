@@ -4,8 +4,6 @@ Created on Nov 12, 2011
 @author: jeroen
 '''
 
-from apiException import ApiException
-
 class Param(object):
     '''
     classdocs

@@ -1,7 +1,7 @@
 from apiBase import ApiBase
 from param import Param
-
-from __init__ import Entity, session
+from entity import Entity
+from db import *
 
 '''
 Created on Nov 11, 2011
@@ -22,7 +22,7 @@ class ApiAddIdentity(ApiBase):
     
     def getResult(self):
         entity = Entity( name=self.args['name'], type=self.args['type'] )
-
+        
         session.add(entity)
         session.commit()
             

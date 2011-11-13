@@ -11,11 +11,12 @@ class ApiBase(object):
     Base API module class. 
     '''
 
-    def __init__(self, args):
+    def __init__(self, args, handleArgs=True):
         '''
         Constructor
         '''
-        self.handleParams( args )
+        if handleArgs:
+            self.handleParams( args )
     
     def handleParams(self, args):
         self.args = {}
@@ -56,5 +57,8 @@ class ApiBase(object):
     
     def getResult(self):
         raise ApiException( "This API module still needs to implement it's getResult method" )
+    
+    def getDescription(self):
+        return False
     
     

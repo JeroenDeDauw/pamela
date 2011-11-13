@@ -3,15 +3,9 @@ import sys
 from flask import Flask, request
 from docGen import DocGen
 from apiException import ApiException
+from mods import getModule
 
 app = Flask(__name__)
-
-modules = {
-    'addidentity': { 'package': 'apiAddEntity', 'class': 'ApiAddEntity' },
-    'editidentity': { 'package': 'apiEditEntity', 'class': 'ApiEditEntity' },
-    'deleteentity': { 'package': 'apiDeleteEntity', 'class': 'ApiDeleteEntity' },
-    'queryentities': { 'package': 'apiQueryEntities', 'class': 'ApiQueryEntities' }
-}
 
 version = ( 0, 0, 1 )
 
@@ -21,22 +15,19 @@ def index():
     html = 'Pamela API version %s.%s.%s' % version
     html += '<hr />'
     
-    docGen = DocGen( modules )
-    html += docGen.getDocs()
+    html += DocGen.getDocs()
     
     return html
 
 @app.route('/api/<moduleName>')
 def apiRequest(moduleName):
-    if moduleName in modules:
-        module = modules[moduleName]
-        mod = __import__( 'modules.' + module['package'], fromlist=[module['class']] )
-        module = getattr(mod, module['class'])( request.args )
+    module = getModule( moduleName, request.args )
+    
+    if module == False:
+        raise ApiException( 'There is no API module with name "%s"' % moduleName )
+    else:
         result = module.getResult()
         return json.dumps( { 'result': result } )
-    else:
-        raise ApiException( 'There is no API module with name "%s"' % moduleName )
-    
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)

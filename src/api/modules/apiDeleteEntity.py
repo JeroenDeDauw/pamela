@@ -1,6 +1,6 @@
-from apiBase import ApiBase
-from param import Param
-from db import *
+from api.apiBase import ApiBase
+from api.param import Param
+from api.db import *
 
 '''
 Created on Nov 11, 2011
@@ -15,10 +15,7 @@ class ApiDeleteEntity(ApiBase):
     
     def getParams(self):
         return [
-            Param(name='name', ),
-            Param(name='type', default=Entity.TYPE_PERSON, type=Param.TYPE_INT, values=Entity.getTypes()),
-            Param(name='isanon', default=False, type=Param.TYPE_BOOL),
-            Param(name='status', default=Entity.STATUS_UNKNOWN, type=Param.TYPE_INT, values=Entity.getStatuses()),
+            Param(name='id', type=Param.TYPE_INT, islist=True ),
         ]
     
     def getResult(self):

@@ -1,6 +1,6 @@
-from apiBase import ApiBase
-from param import Param
-from db import *
+from api.apiBase import ApiBase
+from api.param import Param
+from api.db import *
 
 '''
 Created on Nov 11, 2011

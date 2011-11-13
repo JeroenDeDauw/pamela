@@ -15,20 +15,6 @@ modules = {
 
 version = ( 0, 0, 1 )
 
-from base import Base
-from entity import Entity
-from engine import engine
-
-from sqlalchemy import create_engine
-
-engine = create_engine('sqlite:///:memory:', echo=True)
-Base.metadata.create_all(engine)
-
-from sqlalchemy.orm import sessionmaker
-
-Session = sessionmaker(bind=engine)
-session = Session()
-
 @app.route('/')
 @app.route('/api')
 def index():
@@ -53,4 +39,4 @@ def apiRequest(moduleName):
     
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5001)

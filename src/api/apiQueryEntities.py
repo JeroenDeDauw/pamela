@@ -1,6 +1,5 @@
 from apiBase import ApiBase
 from param import Param
-from entity import Entity
 from db import *
 
 '''
@@ -16,14 +15,31 @@ class ApiQueryEntities(ApiBase):
     
     def getParams(self):
         return [
-            Param(name='name', default=None),
-            Param(name='type', type=Param.TYPE_INT, default=1) # Enity.TYPE_PERSON
+            Param(name='name', default=None, islist=True),
+            Param(name='type', default=None, islist=True, type=Param.TYPE_INT, values=Entity.getTypes()),
+            Param(name='isanon', default=None, islist=True, type=Param.TYPE_BOOL),
+            Param(name='status', default=None, islist=True, type=Param.TYPE_INT, values=Entity.getStatuses()),
         ]
     
     def getResult(self):
         entities = []
         
-        for entity in session.query(Entity).filter_by(type=self.args['type']): 
+        query = session.query(Entity)
+        
+        # TODO: loop
+        if self.args['name'] is not None:
+            query = query.filter(Entity.name.in_(self.args['name']))
+            
+        if self.args['type'] is not None:
+            query = query.filter(Entity.type.in_(self.args['type']))
+            
+        if self.args['isanon'] is not None:
+            query = query.filter(Entity.isanon.in_(self.args['isanon']))
+        
+        if self.args['status'] is not None:
+            query = query.filter(Entity.status.in_(self.args['status']))
+        
+        for entity in query: 
             entities.append( entity.toDict() )
             
         return { 'success': 'true', 'entities': entities } # TODO: query continue

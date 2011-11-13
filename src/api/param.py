@@ -6,7 +6,7 @@ Created on Nov 12, 2011
 
 class Param(object):
     '''
-    classdocs
+    Parameter definition
     '''
     
     TYPE_STR = 0

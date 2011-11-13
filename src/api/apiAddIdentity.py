@@ -1,6 +1,5 @@
 from apiBase import ApiBase
 from param import Param
-from entity import Entity
 from db import *
 
 '''
@@ -25,5 +24,5 @@ class ApiAddIdentity(ApiBase):
         
         session.add(entity)
         session.commit()
-            
+        
         return { 'success': 'true' }

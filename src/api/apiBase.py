@@ -24,13 +24,23 @@ class ApiBase(object):
         for name in args:
             if name in params:
                 if self.argIsValid( params[name], args[name] ):
-                    self.args[name] = args[name]
+                    value = args[name]
+                    
+                    if params[name].islist:
+                        value = value.split( '|' )
+                    
+                    self.args[name] = value
                 else:
                     raise ApiException( 'Value "%s" is not valid for parameter %s' % args[name], name )
             else:
                 raise ApiException( 'Unknown parameter %s' % name ) 
         
-        # TODO: make sure all params w/o default are set
+        for name in params:
+            if name not in self.args:
+                if params[name].required:
+                    raise ApiException( 'Missing parameter %s' % name )
+                else:
+                    self.args[name] = params[name].default
     
     def argIsValid(self, param, value):
         return True # TODO

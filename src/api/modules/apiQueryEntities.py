@@ -10,7 +10,8 @@ Created on Nov 11, 2011
 
 class ApiQueryEntities(ApiBase):
     '''
-    classdocs
+    API module to query entities.
+    Conditions are joined with AND. Multiple values per condition are joined with OR.
     '''
     
     def getParams(self):

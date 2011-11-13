@@ -8,13 +8,16 @@ from apiException import ApiException
 
 class ApiBase(object):
     '''
-    classdocs
+    Base API module class. 
     '''
 
     def __init__(self, args):
         '''
         Constructor
         '''
+        self.handleParams( args )
+    
+    def handleParams(self, args):
         self.args = {}
         params = {}
 

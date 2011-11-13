@@ -7,9 +7,9 @@ from apiException import ApiException
 app = Flask(__name__)
 
 modules = {
-    'addidentity': { 'package': 'apiAddIdentity', 'class': 'ApiAddIdentity' },
-    'editidentity': { 'package': 'apiEditIdentity', 'class': 'ApiEditIdentity' },
-    'deleteidentity': { 'package': 'apiDeleteIdentity', 'class': 'ApiDeleteIdentity' },
+    'addidentity': { 'package': 'apiAddEntity', 'class': 'ApiAddEntity' },
+    'editidentity': { 'package': 'apiEditEntity', 'class': 'ApiEditEntity' },
+    'deleteentity': { 'package': 'apiDeleteEntity', 'class': 'ApiDeleteEntity' },
     'queryentities': { 'package': 'apiQueryEntities', 'class': 'ApiQueryEntities' }
 }
 
@@ -30,7 +30,7 @@ def index():
 def apiRequest(moduleName):
     if moduleName in modules:
         module = modules[moduleName]
-        mod = __import__( module['package'], fromlist=[module['class']] )
+        mod = __import__( 'modules.' + module['package'], fromlist=[module['class']] )
         module = getattr(mod, module['class'])( request.args )
         result = module.getResult()
         return json.dumps( { 'result': result } )

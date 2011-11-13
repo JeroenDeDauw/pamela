@@ -15,16 +15,17 @@ class Entity(Base):
     classdocs
     '''
     
-    #static
+    #static enum
     TYPE_INFRASTRUCTURE = 0
     TYPE_PERSON = 1
     TYPE_UNKNOWN = 2
     
-    #static
+    #static enum
     STATUS_ACTIVE = 0
     STATUS_IDLE = 1
     STATUS_AWAY = 2
     STATUS_BUSSY = 3
+    STATUS_UNKNOWN = 4
     
     __tablename__ = 'entities'
     
@@ -51,12 +52,25 @@ class Entity(Base):
         return dict
     
     @staticmethod
+    def getFields():
+        return ['name', 'type', 'isanom', 'status', 'lastseen']
+    
+    @staticmethod
     def getTypes():
         return [Entity.TYPE_INFRASTRUCTURE, Entity.TYPE_PERSON, Entity.TYPE_UNKNOWN]
     
     @staticmethod
     def getStatuses():
         return [Entity.STATUS_ACTIVE, Entity.STATUS_AWAY, Entity.STATUS_BUSSY, Entity.STATUS_IDLE]
+    
+    @staticmethod
+    def newFromDict( dict ):
+        entity = Entity()
+        
+        for field in Entity.getFields():
+            setattr(entity, field, dict[field] if field in dict else None)
+        
+        return entity
 
 from sqlalchemy import create_engine
 
